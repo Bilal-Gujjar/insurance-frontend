@@ -6,9 +6,9 @@ export interface RecommendationInput {
 }
 
 export interface RecommendationResult {
-  type: string;
-  coverage: number;
-  term: number;
-  explanation: string;
+  planType: string;
+  coverageAmount: number;
+  termYears: number;
+  details: string;
   monthlyPremium: number;
 }
