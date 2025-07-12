@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { useFormik, FormikHelpers } from 'formik';
+import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { calculateRecommendation, RecommendationResult, RecommendationInput } from '../utils/calculateRecommendation';
+import { RecommendationResult, RecommendationInput } from '../utils/calculateRecommendation';
+import { getRecommendation } from '../services/recommendationService';
 
 export function useInsuranceRecommendation() {
   const [recommendation, setRecommendation] = useState<RecommendationResult | null>(null);
@@ -19,8 +20,8 @@ export function useInsuranceRecommendation() {
       .min(0, 'Cannot be negative')
       .max(10, 'Maximum 10 dependents')
       .required('Dependents is required'),
-    riskTolerance: Yup.mixed<'low' | 'medium' | 'high'>()
-      .oneOf(['low', 'medium', 'high'], 'Invalid risk tolerance')
+    riskTolerance: Yup.mixed<'Conservative' | 'Balanced' | 'Aggressive'>()
+      .oneOf(['Conservative', 'Balanced', 'Aggressive'], 'Invalid risk tolerance')
       .required('Risk tolerance is required'),
   });
 
@@ -29,12 +30,18 @@ export function useInsuranceRecommendation() {
       age: 30,
       income: 75000,
       dependents: 1,
-      riskTolerance: 'medium',
+      riskTolerance: 'Conservative',
     },
     validationSchema,
-    onSubmit: (values: RecommendationInput, helpers: FormikHelpers<RecommendationInput>) => {
-      setRecommendation(calculateRecommendation(values));
-    },
+    onSubmit: async (values: RecommendationInput) => {
+      try {
+        const recommendation = await getRecommendation(values);
+        console.log("API Response:", recommendation);
+        setRecommendation(recommendation);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    }
   });
 
   const handleIncomeChange = (value: number) => {
@@ -50,4 +57,4 @@ export function useInsuranceRecommendation() {
     setShowHighEarnerInput,
     handleIncomeChange,
   };
-} 
+}

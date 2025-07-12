@@ -1,4 +1,6 @@
 import React from 'react';
+import type { FormikProps } from 'formik';
+import type { RecommendationInput } from '../../utils/calculateRecommendation';
 
 interface SliderInputProps {
   label: string;
@@ -12,7 +14,7 @@ interface SliderInputProps {
   error?: string | false;
   showHighEarnerInput?: boolean;
   setShowHighEarnerInput?: () => void;
-  formik?: any;
+  formik?: FormikProps<RecommendationInput>;
 }
 
 const SliderInput: React.FC<SliderInputProps> = ({
@@ -41,7 +43,9 @@ const SliderInput: React.FC<SliderInputProps> = ({
     </div>
     <div className="bg-gray-700/50 p-4 rounded-lg">
       <div className="text-center mb-3">
-        <span className="text-2xl font-bold text-emerald-400">{typeof value === 'number' ? value.toLocaleString() : value}</span>
+        <span className="text-2xl font-bold text-emerald-400">
+          {typeof value === 'number' ? value.toLocaleString() : value}
+        </span>
         {name === 'age' && <span className="text-gray-400 ml-2 text-sm">years</span>}
       </div>
       {!showHighEarnerInput ? (
@@ -58,8 +62,8 @@ const SliderInput: React.FC<SliderInputProps> = ({
             className="w-full h-2 bg-gray-600 rounded-lg appearance-none cursor-pointer slider"
           />
           <div className="flex justify-between text-xs text-gray-500 mt-2">
-            <span>{name === 'income' ? `$${(min/1000).toFixed(0)}k` : min}</span>
-            <span>{name === 'income' ? `$${(max/1000).toFixed(0)}k+` : max}</span>
+            <span>{name === 'income' ? `$${(min / 1000).toFixed(0)}k` : min}</span>
+            <span>{name === 'income' ? `$${(max / 1000).toFixed(0)}k+` : max}</span>
           </div>
         </>
       ) : (
@@ -98,4 +102,4 @@ const SliderInput: React.FC<SliderInputProps> = ({
   </div>
 );
 
-export default SliderInput; 
+export default SliderInput;

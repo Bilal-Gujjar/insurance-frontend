@@ -36,7 +36,11 @@ const InsuranceRecommendationApp = () => {
                 setShowHighEarnerInput(false);
                 formik.resetForm();
               }}
-              onGetQuote={() => alert("Feature coming soon! We'll connect you with a licensed agent.")}
+              onGetQuote={() => {
+                setRecommendation(null);
+                setShowHighEarnerInput(false);
+                formik.resetForm();
+              }}
             />
           )}
         </div>

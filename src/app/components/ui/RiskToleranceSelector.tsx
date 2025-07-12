@@ -1,15 +1,15 @@
 import React from 'react';
 
 interface RiskToleranceSelectorProps {
-  value: 'low' | 'medium' | 'high';
-  onChange: (value: 'low' | 'medium' | 'high') => void;
+  value: 'Conservative' | 'Balanced' | 'Aggressive';
+  onChange: (value: 'Conservative' | 'Balanced' | 'Aggressive') => void;
   error?: string | false;
 }
 
 const options = [
-  { value: 'low', label: 'Conservative', desc: 'Stable returns' },
-  { value: 'medium', label: 'Balanced', desc: 'Moderate growth' },
-  { value: 'high', label: 'Aggressive', desc: 'Higher potential' }
+  { value: 'Conservative', label: 'Conservative', desc: 'Stable returns' },
+  { value: 'Balanced', label: 'Balanced', desc: 'Moderate growth' },
+  { value: 'Aggressive', label: 'Aggressive', desc: 'Higher potential' }
 ];
 
 const RiskToleranceSelector: React.FC<RiskToleranceSelectorProps> = ({ value, onChange, error }) => (
@@ -28,11 +28,11 @@ const RiskToleranceSelector: React.FC<RiskToleranceSelectorProps> = ({ value, on
         <button
           key={option.value}
           type="button"
-          onClick={() => onChange(option.value as 'low' | 'medium' | 'high')}
+          onClick={() => onChange(option.value as 'Conservative' | 'Balanced' | 'Aggressive')}
           className={`p-3 rounded-lg transition-all duration-200 border ${value === option.value
             ? 'bg-emerald-600 text-white border-emerald-500'
             : 'bg-gray-700/50 text-gray-300 border-gray-600 hover:border-gray-500'
-          }`}
+            }`}
         >
           <div className="font-medium text-center text-sm">{option.label}</div>
           <div className="text-xs mt-1 opacity-80 text-center">{option.desc}</div>
@@ -43,4 +43,4 @@ const RiskToleranceSelector: React.FC<RiskToleranceSelectorProps> = ({ value, on
   </div>
 );
 
-export default RiskToleranceSelector; 
+export default RiskToleranceSelector;
